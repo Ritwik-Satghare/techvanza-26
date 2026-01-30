@@ -51,6 +51,12 @@ const transactionSchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "paid", "failed"],
+      default: "pending",
+    },
   },
   {
     timestamps: true,

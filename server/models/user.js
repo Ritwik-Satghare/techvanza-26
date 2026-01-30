@@ -35,6 +35,15 @@ const userSchema = new mongoose.Schema(
       pincode: String,
       city: String,
     },
+
+    wallet: {
+      balance: Number,
+      currency: {
+        type: String,
+        default: "INR"
+      }
+    }
+
   },
   { timestamps: true }
 );
