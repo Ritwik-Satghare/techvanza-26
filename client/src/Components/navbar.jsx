@@ -21,7 +21,7 @@ const Navbar = () => {
           {/* Logo Section */}
           <Link 
             to="/" 
-            className="flex items-center gap-2 cursor-pointer group"
+            className="flex items-center gap-2 cursor-pointer group hover:scale-105 transition-transform duration-300"
           >
             <div className="relative flex items-center justify-center w-10 h-10 bg-white/10 rounded-full group-hover:bg-white/20 transition-all">
                <Recycle className="w-6 h-6 text-[#a4d65e] animate-[spin_10s_linear_infinite]" />
@@ -38,7 +38,7 @@ const Navbar = () => {
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 transform hover:scale-110 ${
                     isActive(link.path)
                       ? "bg-[#a4d65e] text-[#2d5016] font-bold"
                       : "text-gray-100 hover:bg-white/10 hover:text-[#a4d65e]"
@@ -49,7 +49,7 @@ const Navbar = () => {
               ))}
               <Link 
                 to="/signup"
-                className="bg-white text-[#2d5016] px-5 py-2 rounded-full font-bold hover:bg-[#a4d65e] transition-colors shadow-md inline-block"
+                className="bg-white text-[#2d5016] px-5 py-2 rounded-full font-bold hover:bg-[#a4d65e] transition-all duration-300 shadow-md inline-block transform hover:scale-105"
               >
                 Login / Join
               </Link>

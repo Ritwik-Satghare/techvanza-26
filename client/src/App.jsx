@@ -32,7 +32,9 @@ import Marketplace from './Pages/Marketplace';
 import About from './Pages/About';
 import Signup from './Pages/Signup';
 import './App.css'
-import Login from './pages/Login';
+import Login from './Pages/login';
+import ListWaste from './Pages/listWaste';
+import BrowseMaterials from './Pages/browseMaterials';
 
 
 
@@ -61,8 +63,9 @@ const Layout = () => {
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/about" element={<About />} />
           <Route path="/signup" element={<Signup />} />
+           <Route path="/browse-materials" element={<BrowseMaterials />} />
           <Route path="/login" element={<Login />} />
-
+          <Route path="/sell-waste" element={<ListWaste />} />
         </Routes>
       </main>
       <Footer />

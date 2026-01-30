@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Search, Filter, ShieldCheck, MapPin, Phone } from 'lucide-react';
-import { MOCK_LISTINGS } from '../Data/mockData';
+import { MOCK_LISTINGS } from '../data/mockData';
 
 const Marketplace = () => {
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
+  // Initialize filter with state from navigation, or default to "All"
   const [activeFilter, setActiveFilter] = useState("All");
+  const [expandedId, setExpandedId] = useState(null);
+
+  // Update active filter if we navigated here with a category
+  useEffect(() => {
+    setActiveFilter(location.state?.category || "All");
+  }, [location.state]);
 
   const filteredListings = MOCK_LISTINGS.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -12,6 +21,14 @@ const Marketplace = () => {
     const matchesFilter = activeFilter === "All" || item.type === activeFilter;
     return matchesSearch && matchesFilter;
   });
+
+  const toggleAddress = (id) => {
+    if (expandedId === id) {
+      setExpandedId(null);
+    } else {
+      setExpandedId(id);
+    }
+  };
 
   return (
     <div className="bg-[#f9fafb] min-h-screen py-12">
@@ -83,10 +100,10 @@ const Marketplace = () => {
                 
                 <div className="flex items-center text-gray-500 text-sm mb-4">
                   <MapPin className="w-4 h-4 mr-1 text-[#a4d65e]" />
-                  {item.location} <span className="mx-2">•</span> {item.distance} away
+                  {item.distance} away <span className="mx-2">•</span> {item.city}, {item.state}
                 </div>
 
-                <div className="bg-gray-50 rounded-xl p-4 mb-6">
+                <div className="bg-gray-50 rounded-xl p-4 mb-4">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-gray-500 text-sm">Quantity</span>
                     <span className="font-bold text-gray-800">{item.quantity}</span>
@@ -100,6 +117,24 @@ const Marketplace = () => {
                     <span className="text-xs font-medium text-gray-500">{item.marketPrice}</span>
                   </div>
                 </div>
+                
+                {/* Pickup Address Toggle */}
+                <button
+                  onClick={() => toggleAddress(item.id)}
+                  className="text-pink-600 font-bold text-sm mb-4 flex items-center gap-1 hover:text-pink-700 hover:underline transition-all"
+                >
+                  <MapPin className="w-4 h-4" />
+                  Pickup Address
+                </button>
+                
+                {/* Collapsible Address Section */}
+                {expandedId === item.id && (
+                  <div className="mb-4 bg-pink-50 p-3 rounded-xl border border-pink-100 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <p className="text-xs text-gray-500 font-semibold uppercase mb-1">Seller Location</p>
+                    <p className="text-sm text-gray-800 font-medium">{item.seller}</p>
+                    <p className="text-sm text-gray-600">{item.location}</p>
+                  </div>
+                )}
 
                 <div className="flex gap-3">
                   <button className="flex-1 bg-[#2d5016] text-white font-bold py-3 rounded-xl hover:bg-[#223d11] transition-colors flex items-center justify-center gap-2">
